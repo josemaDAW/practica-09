@@ -28,9 +28,9 @@ aws ec2 authorize-security-group-ingress \
     --port 3306 \
     --cidr 0.0.0.0/0
    
-   --
+
    Ejercicio 2
-   --
+
    # Variables de configuración
     AMI_ID=ami-08e637cea2f053dfa
     COUNT=1
@@ -46,9 +46,9 @@ aws ec2 run-instances \
     --key-name $KEY_NAME \
     --security-groups $SECURITY_GROUP_BACKEND \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_NAME_BACKEND}]"
-  --
+
    Ejercicio 3
-  --
+
   
   #!/bin/bash
 set -x
@@ -69,9 +69,9 @@ aws ec2 terminate-instances \
     
     
     
-    --
+
     ejercicio 4
-    --
+ 
     
     
     
@@ -79,7 +79,7 @@ aws ec2 terminate-instances \
     
     
     
-    ejercicio 5
+ejercicio 5
 
 !/bin/bash
 # Get the list of all running EC2 instances
