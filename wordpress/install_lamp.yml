@@ -1,7 +1,10 @@
----
 - name: Playbook para instalar la pila LAMP
   hosts: frontend
   become: yes
+
+  # Variables definidas en un archivo externo
+  vars_files:
+    - vars/variables.yml
 
   tasks:
 
@@ -20,11 +23,8 @@
         state: present
 
     - name: Instalar PHP y los módulos necesarios
-      apt: 
-        name:
-          - php
-          - php-mysql
-          - libapache2-mod-php
+      apt:
+        name: "{{ php_packages }}"
         state: present
 
     - name: Reiniciar el servidor web Apache

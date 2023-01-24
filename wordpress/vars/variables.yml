@@ -1,3 +1,8 @@
+php_packages:
+    - php
+    - php-mysql
+    - libapache2-mod-php
+    
 db:
     name: lamp_db
     user: lamp_user
