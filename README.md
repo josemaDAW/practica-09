@@ -9,19 +9,19 @@ De momento la única configuración que vamos a realizar en Ansible será editar
 --
 Ejercicio 1
 --
-# Creamos el grupo de seguridad: backend-sg
+- Creamos el grupo de seguridad: backend-sg
 aws ec2 create-security-group \
     --group-name backend-sg \
     --description "Reglas para el backend"
 
-# Creamos una regla de accesso SSH
+- Creamos una regla de accesso SSH
 aws ec2 authorize-security-group-ingress \
     --group-name backend-sg \
     --protocol tcp \
     --port 22 \
     --cidr 0.0.0.0/0
     
-# Creamos una regla de accesso para MySQL
+- Creamos una regla de accesso para MySQL
 aws ec2 authorize-security-group-ingress \
     --group-name backend-sg \
     --protocol tcp \
@@ -31,13 +31,13 @@ aws ec2 authorize-security-group-ingress \
 
    Ejercicio 2
 
-   # Variables de configuración
+   - Variables de configuración
     AMI_ID=ami-08e637cea2f053dfa
     COUNT=1
     INSTANCE_TYPE=t2.micro
     KEY_NAME=vockey
     SECURITY_GROUP_BACKEND=backend-sg
-   # Creamos una intancia EC2 para el backend
+   - Creamos una intancia EC2 para el backend
 aws ec2 run-instances \
     --name backend \
     --image-id $AMI_ID \
@@ -53,8 +53,8 @@ aws ec2 run-instances \
   #!/bin/bash
 set -x
 
-# Deshabilitamos la paginación de la salida de los comandos de AWS CLI
-# Referencia: https://docs.aws.amazon.com/es_es/cli/latest/userguide/cliv2-migration.html#cliv2-migration-output-pager
+- Deshabilitamos la paginación de la salida de los comandos de AWS CLI
+- Referencia: https://docs.aws.amazon.com/es_es/cli/latest/userguide/cliv2-migration.html#cliv2-migration-output-pager
 export AWS_PAGER=""
 
 # Obtenemos una lista con los identificadores de las instancias que están en ejecución
@@ -63,7 +63,7 @@ EC2_ID_LIST=$(aws ec2 describe-instances \
                 --query "Reservations[*].Instances[*].InstanceId" \
                 --output text)
 
-# Eliminamos todas las intancias que están en ejecución
+- Eliminamos todas las intancias que están en ejecución
 aws ec2 terminate-instances \
     --instance-ids $EC2_ID_LIST
     
@@ -82,10 +82,10 @@ aws ec2 terminate-instances \
 ejercicio 5
 
 !/bin/bash
-# Get the list of all running EC2 instances
+-Get the list of all running EC2 instances
 instances=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query "Reservations[].Instances[].[InstanceId,PublicIpAddress]" --output text)
 
-# Iterate through the list and display the instance name and public IP
+-Iterate through the list and display the instance name and public IP
 for instance in $instances; do
     instance_id=$(echo $instance | awk '{print $1}')
     public_ip=$(echo $instance | awk '{print $2}')
