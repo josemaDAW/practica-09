@@ -1,14 +1,8 @@
-php_packages:
-    - php
-    - php-mysql
-    - libapache2-mod-php
-    
 db:
-    name: lamp_db
-    user: lamp_user
-    password: lamp_password
+    name: wordpress_db
+    user: wordpress_user
+    password: wordpress_password
 
-phpmyadmin:
-    user: pma_user
-    password: pma_password
-    db_name: db_name
+certbot:
+    email: yojol63131@galcake.com
+    domain: wordpressansible.hopto.org
