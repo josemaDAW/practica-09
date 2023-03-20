@@ -2,7 +2,7 @@ version: '3'
 
 services:
   wordpress:
-    image: wordpress
+    image: wordpress:6.1
     ports:
       - 80:80
     environment: 
@@ -13,11 +13,7 @@ services:
     volumes: 
       - wordpress_data:/var/www/html
     depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - frontend-network
-      - backend-network
+      - mysql
     restart: always
 
   mysql:
@@ -31,13 +27,6 @@ services:
       - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: mysql --user=${WORDPRESS_DB_USER} --password=${WORDPRESS_DB_PASSWORD} -e "SHOW DATABASES;"
-      interval: 1s
-      timeout: 3s
-      retries: 3
-    networks:
-      - backend-network
     restart: always
 
   phpmyadmin:
@@ -46,18 +35,8 @@ services:
       - 8080:80
     environment: 
       - PMA_ARBITRARY=1
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - frontend-network
-      - backend-network
     restart: always
 
 volumes: 
   mysql_data:
   wordpress_data:
-
-networks:
-  frontend-network:
-  backend-network:
