@@ -1,0 +1,28 @@
+---
+- name: Playbook para instalar el Frontend.
+  hosts: frontend 
+  become: yes
+
+  tasks: 
+
+    - name: Actualizar los repositorios
+      apt:
+       update_cache: yes
+  
+    - name: Instalar el servidor web Apache
+      apt:
+        name: apache2
+        state: present
+  
+    - name: Instalar PHP y los módulos necesarios
+      apt: 
+        name:
+          - php
+          - php-mysql
+          - libapache2-mod-php
+        state: present
+
+    - name: Reiniciar el servidor web Apache
+      service:
+        name: apache2
+        state: restarted

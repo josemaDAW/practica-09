@@ -1,0 +1,56 @@
+---
+- name: Playbook para crear la base de datos
+  hosts: frontend
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Actualizar los repositorios
+      apt:
+       update_cache: yes
+
+    - name: Instalamos pip3
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Instalamos PyMySQL
+      pip:
+        name: pymysql
+        state: present
+
+    - name: Instalar paquete de MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Editar archivo de configuración de MySQL
+      ansible.builtin.replace:
+        path: /etc/mysql/my.cnf
+        regexp: '^bind-address'
+        replace: 'bind-address = 0.0.0.0'
+
+
+    - name: Reiniciar servicio de MySQL
+      service:
+        name: mysql
+        state: restarted
+
+    - name: Crear una base de datos
+      mysql_db:
+        name: "{{ db.name }}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+
+    - name: Crear el usuario de la base de datos
+      no_log: true
+      mysql_user:         
+        name: "{{ db.user }}"
+        password: "{{ db.password }}"
+        priv: "{{ db.name }}.*:ALL"
+        #host: "%"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock

@@ -1,0 +1,24 @@
+db:
+    name: prestashop_db
+    user: prestashop_user
+    password: prestashop_password
+
+prestashop:
+    language: es
+    name: DAW
+    country: es
+    ssl: 1
+    firstname: Juan
+    lastname: B
+    email: hhft_ojmlu76@pihey.com
+    password: hhft_ojmlu76@pihey.com
+    db_server: 3.91.52.255
+    domain: ansibleprestashop.hopto.org
+
+certbot:
+    email: hhft_ojmlu76@pihey.com
+
+phpmyadmin:
+    user: pma_user
+    password: pma_password
+    db_name: db_name

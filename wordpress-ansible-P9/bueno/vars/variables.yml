@@ -1,0 +1,8 @@
+db:
+    name: wordpress_db
+    user: wordpress_user
+    password: wordpress_password
+
+certbot:
+    email: wordpress09@kygur.com
+    domain: practicawordpress.hopto.org
