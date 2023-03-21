@@ -4,5 +4,5 @@ db:
     password: wordpress_password
 
 certbot:
-    email: wordpress09@kygur.com
-    domain: practicawordpress.hopto.org
+    email: wordpress-ansible@kygur.com
+    domain: wordpressansible12.hopto.org

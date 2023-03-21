@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  Esta plantilla crea la infraestructura necesaria para el despliegue de una aplicación web en dos niveles.
+  En el frontend se creará un grupo de seguridad con los puertos 22, 80 y 443 abiertos,
+  en el backend se creará un grupo de seguridad con los puertos 22 y 3306 abiertos,
+  se crearán dos instancias EC2 con la AMI de Ubuntu Server 22.04 y se le asocian los grupos de seguridad.
+  También se crea una IP elástica y se le asocia a la instancia EC2 haciendo uso del recurso AWS::EC2::EIPAssociation.
+Resources:
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: sg_frontend
+      GroupDescription: Grupo de seguridad del frontend
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: sg_backend
+      GroupDescription: Grupo de seguridad del backend
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: mysq
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-06878d265978313ca
+      InstanceType: t2.small
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      KeyName: vockey
+      Tags:
+        - Key: Name
+          Value: frontend
+    MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-06878d265978313ca
+      InstanceType: t2.small
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      KeyName: vockey
+      Tags:
+        - Key: Name
+          Value: backend
+  MyEIP:
+    Type: AWS::EC2::EIP
+  MyEIPAssociation:
+    Type: AWS::EC2::EIPAssociation
+    DependsOn: MyEIP
+    Properties:
+      AllocationId: !GetAtt MyEIP.AllocationId
+      InstanceId: !Ref MyEC2Instance
+message.txt
+3 KB

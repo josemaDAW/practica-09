@@ -8,15 +8,15 @@ prestashop:
     name: DAW
     country: es
     ssl: 1
-    firstname: Juan
+    firstname: Josema
     lastname: B
-    email: hhft_ojmlu76@pihey.com
-    password: hhft_ojmlu76@pihey.com
-    db_server: 3.91.52.255
-    domain: ansibleprestashop.hopto.org
+    email: ansible-presta@kygur.com
+    password: ansible-presta@kygur.com
+    db_server: 34.228.66.169
+    domain: prestaaansible.hopto.org
 
 certbot:
-    email: hhft_ojmlu76@pihey.com
+    email: ansible-presta@kygur.com
 
 phpmyadmin:
     user: pma_user
